@@ -1,0 +1,24 @@
+/* client/public/styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #222;
+    color: #fff;
+  }
+  
+  #menu {
+    margin-top: 50px;
+  }
+  
+  .board-container {
+    display: inline-block;
+    margin: 20px;
+  }
+  
+  canvas {
+    background-color: #000;
+    display: block;
+    margin: 0 auto;
+  }
+  

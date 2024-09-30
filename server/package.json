@@ -1,20 +1,17 @@
 {
-    "name": "tetris-server",
-    "version": "1.0.0",
-    "description": "Backend for 1v1 Tetris Clone",
-    "main": "index.js",
-    "scripts": {
-        "start": "node index.js",
-        "dev": "nodemon index.js"
-    },
-    "keywords": [],
-    "author": "Your Name",
-    "license": "MIT",
-    "dependencies": {
-        "express": "^4.21.0",
-        "socket.io": "^4.6.1"
-    },
-    "devDependencies": {
-        "nodemon": "^2.0.22"
-    }
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.0",
+    "socket.io": "^4.8.0",
+    "uuid": "^10.0.0"
+  }
 }
