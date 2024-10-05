@@ -62,19 +62,25 @@ socket.on('gameCreated', ({ roomId: id }) => {
 });
 
 // Handle game joining
-socket.on('gameJoined', ({ roomId: id }) => {
+socket.on('gameJoined', ({ roomId: id, players }) => {
   roomId = id;
   status.innerText = `Joined game: ${roomId}`;
   console.log(`Joined game with Room ID: ${roomId}`);
+  console.log(`Current Players in Room: ${players}`);
 });
 
 // Handle start game
 socket.on('startGame', ({ roomId: id, players }) => {
+  console.log(`Received startGame for Room ID: ${id}`);
+  console.log(`Players in Game: ${players}`);
   if (id === roomId) {
+    console.log('Room ID matches. Transitioning to game view.');
     menu.style.display = 'none';
     gameDiv.style.display = 'flex';
     initializeGame();
     console.log('Game started.');
+  } else {
+    console.log('Room ID does not match. Ignoring startGame event.');
   }
 });
 
@@ -104,6 +110,12 @@ socket.on('playerDisconnected', ({ message }) => {
 socket.on('error', ({ message }) => {
   alert(message);
   console.log('Error:', message);
+});
+
+// Handle connection errors
+socket.on('connect_error', (err) => {
+  console.error('Connection Error:', err.message);
+  alert('Failed to connect to the server.');
 });
 
 // Function to get opponent's ID

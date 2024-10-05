@@ -23,7 +23,7 @@ class GameManager {
       // Handle joining an existing game
       socket.on('joinGame', ({ roomId }) => {
         const game = this.games[roomId];
-        if (game && game.players.length < 2) {
+        if (game && game.players.length < 2) { // Changed to <2 to allow only 2 players
           socket.join(roomId);
           game.players.push(socket.id);
           game.grids[socket.id] = game.createGrid(); // Initialize grid for the new player
@@ -34,13 +34,17 @@ class GameManager {
             y: 0 
           };
           game.scores[socket.id] = 0;
-          this.io.to(roomId).emit('startGame', { roomId, players: game.players });
-          
-          // If two players are present, start the game loop
-          if (game.players.length === 2) {
-            game.startGameLoop();
-          }
+
+          // Emit 'gameJoined' to the joining client
+          socket.emit('gameJoined', { roomId, players: game.players });
           console.log(`Socket ${socket.id} joined Room ${roomId}`);
+
+          // If two players are present, emit 'startGame' to all players in the room
+          if (game.players.length === 2) {
+            this.io.to(roomId).emit('startGame', { roomId, players: game.players });
+            game.startGameLoop();
+            console.log(`Game in Room ${roomId} has started.`);
+          }
         } else {
           socket.emit('error', { message: 'Game not found or already full.' });
           console.log(`Socket ${socket.id} failed to join Room ${roomId}: Game not found or already full.`);
